@@ -11,8 +11,9 @@ from timeit import time
 from timeit import default_timer as timer  ### to calculate FPS
 
 import numpy as np
-from keras import backend as K
-from keras.models import load_model
+from tensorflow.keras import backend as K
+from tensorflow.compat.v1.keras.backend import get_session
+from tensorflow.keras.models import load_model
 from PIL import Image, ImageFont, ImageDraw
 
 from yolo3.model import yolo_eval
@@ -23,12 +24,12 @@ class YOLO(object):
         self.model_path = 'model_data/yolo.h5'
         self.anchors_path = 'model_data/yolo_anchors.txt'
         self.classes_path = 'model_data/coco_classes.txt'
-        self.score = 0.5
+        self.score = 0.2
         self.iou = 0.5
         self.class_names = self._get_class()
         self.anchors = self._get_anchors()
-        self.sess = K.get_session()
-        self.model_image_size = (416, 416) # fixed size or (None, None)
+        self.sess = get_session()
+        # self.model_image_size = (416, 416) # fixed size or (None, None)
         self.is_fixed_size = self.model_image_size != (None, None)
         self.boxes, self.scores, self.classes = self.generate()
 

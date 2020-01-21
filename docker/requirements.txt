@@ -1,0 +1,4 @@
+opencv-python
+pillow
+sklearn
+eyewitness[mot]>=1.2.1
